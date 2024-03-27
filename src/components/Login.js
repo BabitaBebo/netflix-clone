@@ -1,21 +1,25 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
 import { auth } from "../utils/firebase.js";
 import { addUser } from "../utils/userSlice.js";
 import {
+  BACKGROUND_IMAGE_SIGNIN,
+  USER_PROFILE,
+  DEFAULT_PROFILE_IMAGE,
+} from "../utils/constants.js";
+import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState();
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -43,8 +47,7 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              "https://media.licdn.com/dms/image/D4D03AQFjPHn5_oAcCA/profile-displayphoto-shrink_800_800/0/1697539989993?e=1716422400&v=beta&t=QOWY9EAwfq7s5c5TW6BQNysgVgi2nAXqoN8CWaDrD_E",
+            photoURL: DEFAULT_PROFILE_IMAGE,
           })
             .then(() => {
               // Profile updated!
@@ -57,7 +60,7 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
+              // navigate("/browse");
               console.log(user.displayName);
             })
             .catch((error) => {
@@ -65,7 +68,7 @@ const Login = () => {
               setErrorMessage(error.message);
             });
           console.log(user);
-          navigate("/browse");
+          // navigate("/browse");
         })
         .catch((err) => {
           const errCode = err.code;
@@ -82,7 +85,7 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
-          navigate("/browse");
+          // navigate("/browse");
         })
         .catch((err) => {
           const errCode = err.code;
@@ -98,10 +101,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/fc164b4b-f085-44ee-bb7f-ec7df8539eff/d23a1608-7d90-4da1-93d6-bae2fe60a69b/IN-en-20230814-popsignuptwoweeks-perspective_alpha_website_large.jpg"
-          alt="Netflix logo"
-        />
+        <img src={BACKGROUND_IMAGE_SIGNIN} alt="Netflix logo" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
