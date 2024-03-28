@@ -26,6 +26,7 @@
 - Fetch data from movieTrailer
 - Update store with movieTrailer data
 - Embedded youtube video and make it autoplay and mute
+- Build secondary component
 
 # Features
 
